@@ -1,0 +1,39 @@
+default_stages: [pre-commit]
+fail_fast: false
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: debug-statements
+      - id: check-added-large-files
+      - id: requirements-txt-fixer
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.13.1
+    hooks:
+      # Run the linter.
+      - id: ruff-check
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: pytest
+        language: python
+        name: Run tests with pytest
+        entry: coverage run -m pytest test
+        always_run: true
+        pass_filenames: false
+      - id: coverage-report
+        language: python
+        name: Generate coverage report
+        entry: coverage report -m
+        pass_filenames: false
