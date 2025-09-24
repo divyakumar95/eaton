@@ -1,0 +1,13 @@
+[project]
+name = "python_microservice"
+version = "0.1.0"
+description = "A simple Python microservice using Flask"
+
+dependencies = [
+    "flask",
+    "pytest"
+]
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
