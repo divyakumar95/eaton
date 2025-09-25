@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  dependencies:
+  lint_and_test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,11 +28,6 @@ jobs:
           pip install ruff
           pip install pytest
 
-  lint_and_test:
-    runs-on: ubuntu-latest
-    needs: dependencies # This job depends on the successful completion of the install_dependencies job
-
-    steps:
       - name: Analysing the code with pylint
         run: |
           pylint $(git ls-files '*.py') --disable=R,C --max-line-length=120 || true
