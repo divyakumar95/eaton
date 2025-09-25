@@ -12,7 +12,6 @@ COPY src ./
 # Install build tools and pip
 RUN apt-get update && \
     apt-get install -y build-essential && \
-    pip install --upgrade setuptools wheel && \
     pip install --upgrade pip build && \
     pip install . && \
     rm -rf /var/lib/apt/lists/*
