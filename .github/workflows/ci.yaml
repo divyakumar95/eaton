@@ -39,18 +39,17 @@ jobs:
         id: vars
         run: |
           VERSION=$(grep -oP 'version = "\K[^"]+' ./pyproject.toml)
-          export VERSION
           echo "VERSION=0.0.1" >> $GITHUB_ENV
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag eaton:$VERSION
-          echo "Docker image eaton:$VERSION built successfully"
+          docker build . --file Dockerfile --tag eaton:${VERSION}
+          echo "Docker image eaton:${VERSION} built successfully"
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: "eaton:0.0.1"
+          image-ref: "eaton:${VERSION}"
           format: "table"
           exit-code: "1"
           ignore-unfixed: true
