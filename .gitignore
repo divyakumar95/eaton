@@ -10,7 +10,13 @@ env/
 ENV/
 .venv/
 .virtualenv/
-.*/
+.eaton/
+
+.pytest_cache/
+.ruff_*/
+build/
+dist/
+
 
 # Environment variables
 .env
@@ -78,3 +84,6 @@ pip-delete-this-directory.txt
 
 # Unit test logs
 test-output/
+
+# adding git pipeline files
+!.github/workflows/

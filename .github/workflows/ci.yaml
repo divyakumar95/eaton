@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+
+      - name: Analysing the code with pylint
+        run: |
+          pylint $(git ls-files '*.py')
+
+      - name: Test with pytest
+        run: |
+          pip install pytest
+          pytest -m test
+
+      - name: Build the Docker image
+        run: |
+          VERSION=$(gerp -Eo 'version = "([^"]+)"' ./pyproject.toml | gerp -Eo '"([^"]+$)"')
+          docker build . --file Dockerfile --tag eaton:$VERSION
+          echo "Docker image eaton:$VERSION built successfully"
