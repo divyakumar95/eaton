@@ -35,9 +35,15 @@ jobs:
         run: |
           python -m pytest test
 
+      - name: Get image tags
+        id: vars
+        run: |
+          VERSION=$(grep -oP 'version = "\K[^"]+' ./pyproject.toml)
+          export VERSION
+          echo "VERSION=0.0.1" >> $GITHUB_ENV
+
       - name: Build the Docker image
         run: |
-          VERSION=0.0.1
           docker build . --file Dockerfile --tag eaton:$VERSION
           echo "Docker image eaton:$VERSION built successfully"
 
