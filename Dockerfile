@@ -1,25 +1,20 @@
 # Use a minimal base image with Python
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Set working directory
-WORKDIR /app
-
-# Install build tools and pip
-RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+WORKDIR /eaton
 
 # Copy pyproject.toml and optional poetry.lock if using poetry
 COPY pyproject.toml ./
-# COPY poetry.lock ./
-
-# Install dependencies using pip or poetry
-# If using poetry:
-# RUN pip install poetry && poetry install --no-root
-
-# If using setuptools or hatchling:
-RUN pip install --upgrade pip build && pip install .
-
 # Copy application code
-COPY src/app.py .
+COPY src ./
+
+# Install build tools and pip
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    pip install --upgrade pip build && \
+    pip install . && \
+    rm -rf /var/lib/apt/lists/*
 
 # Expose port
 EXPOSE 5000
