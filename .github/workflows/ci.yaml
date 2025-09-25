@@ -37,6 +37,6 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          VERSION=$(grep -Eo 'version = "([^"]+)"' ./pyproject.toml | grep -Eo '"([^"]+$)"')
+          VERSION=$(grep -qP 'version = "([^"]+)"' ./pyproject.toml | grep -qP '"([^"]+$)"')
           docker build . --file Dockerfile --tag eaton:$VERSION
           echo "Docker image eaton:$VERSION built successfully"
