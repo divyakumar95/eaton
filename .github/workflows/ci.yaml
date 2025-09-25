@@ -33,7 +33,6 @@ jobs:
     needs: dependencies # This job depends on the successful completion of the install_dependencies job
 
     steps:
-      - uses: actions/checkout@v4
       - name: Analysing the code with pylint
         run: |
           pylint $(git ls-files '*.py') --disable=R,C --max-line-length=120 || true
