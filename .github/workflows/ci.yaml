@@ -26,11 +26,10 @@ jobs:
           pip install .
           pip install pytest
           pip install ruff
-          pip install pylint
 
-      - name: Analysing the code with pylint
+      - name: Linting the code with ruff
         run: |
-          pylint $(git ls-files '*.py')
+          ruff check .
 
       - name: Test with pytest
         run: |
